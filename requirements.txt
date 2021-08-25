@@ -1,0 +1,3 @@
+fastqsplitter==1.2.0
+ray[default]>=1.6.0
+pandas>=1.3.1

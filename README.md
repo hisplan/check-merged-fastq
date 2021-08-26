@@ -19,11 +19,27 @@ $ cd workspace
 $ ./download.sh
 USAGE: download.sh [options]
     -s  S3 URI (e.g. s3://dp-lab-data/collaborators/pi/prj/blood2_CX3CR1_CCR2)
-    -d  destination (e.g. blood2_CX3CR1_CCR2)
+    -d  local destination (e.g. blood2_CX3CR1_CCR2)
 
 $ ./download.sh \
   -s s3://dp-lab-data/collaborators/pi/prj/blood2_CX3CR1_CCR2 \
   -d blood2_CX3CR1_CCR2
+```
+
+```
+.
+├── blood2_CX3CR1_CCR2-HPC
+│   ├── blood2_CX3CR1_CCR2_merged.fastq.gz
+│   ├── barcode
+│   │   ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R1_001.fastq.gz
+│   │   ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L002_R1_001.fastq.gz
+│   │   ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L003_R1_001.fastq.gz
+│   │   └── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L004_R1_001.fastq.gz
+│   └── genomic
+│       ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R2_001.fastq.gz
+│       ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L002_R2_001.fastq.gz
+│       ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L003_R2_001.fastq.gz
+│       └── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L004_R2_001.fastq.gz
 ```
 
 Split the merged FASTQ files into multiple chunks in order to speed up the checking process:
@@ -39,6 +55,42 @@ USAGE: split.sh [options]
 $ ./split.sh
   -w workspace/blood2_CX3CR1_CCR2 \
   -m 2653_blood2_CX3CR1_CCR2_IGO_12104_39_merged.fastq.gz
+```
+
+```
+.
+├── blood2_CX3CR1_CCR2-HPC
+│   ├── blood2_CX3CR1_CCR2_merged.fastq.gz
+│   ├── chunk-001.fastq.gz
+│   ├── chunk-002.fastq.gz
+│   ├── chunk-003.fastq.gz
+│   ├── chunk-004.fastq.gz
+│   ├── chunk-005.fastq.gz
+│   ├── chunk-006.fastq.gz
+│   ├── chunk-007.fastq.gz
+│   ├── chunk-008.fastq.gz
+│   ├── chunk-009.fastq.gz
+│   ├── chunk-010.fastq.gz
+│   ├── chunk-011.fastq.gz
+│   ├── chunk-012.fastq.gz
+│   ├── chunk-013.fastq.gz
+│   ├── chunk-014.fastq.gz
+│   ├── chunk-015.fastq.gz
+│   ├── chunk-016.fastq.gz
+│   ├── chunk-017.fastq.gz
+│   ├── chunk-018.fastq.gz
+│   ├── chunk-019.fastq.gz
+│   ├── chunk-020.fastq.gz
+│   ├── barcode
+│   │   ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R1_001.fastq.gz
+│   │   ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L002_R1_001.fastq.gz
+│   │   ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L003_R1_001.fastq.gz
+│   │   └── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L004_R1_001.fastq.gz
+│   └── genomic
+│       ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R2_001.fastq.gz
+│       ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L002_R2_001.fastq.gz
+│       ├── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L003_R2_001.fastq.gz
+│       └── 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L004_R2_001.fastq.gz
 ```
 
 Run the checking process:

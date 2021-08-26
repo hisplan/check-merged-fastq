@@ -7,7 +7,7 @@ usage()
 cat << EOF
 USAGE: `basename $0` [options]
     -s  S3 URI (e.g. s3://dp-lab-data/collaborators/aboire/ImmunologicalDeterminantsLeptomeningealMet/blood2_CX3CR1_CCR2)
-    -d  destination (e.g. blood2_CX3CR1_CCR2)
+    -d  local destination (e.g. blood2_CX3CR1_CCR2)
 EOF
 }
 

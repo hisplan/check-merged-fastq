@@ -18,11 +18,11 @@ Download barcode/genomic FASTQ files and merged FASTQ file from AWS S3:
 $ cd workspace
 $ ./download.sh
 USAGE: download.sh [options]
-    -s  S3 URI (e.g. s3://dp-lab-data/collaborators/aboire/ImmunologicalDeterminantsLeptomeningealMet/blood2_CX3CR1_CCR2)
+    -s  S3 URI (e.g. s3://dp-lab-data/collaborators/pi/prj/blood2_CX3CR1_CCR2)
     -d  destination (e.g. blood2_CX3CR1_CCR2)
 
 $ ./download.sh \
-  -s s3://dp-lab-data/collaborators/aboire/ImmunologicalDeterminantsLeptomeningealMet/blood2_CX3CR1_CCR2 \
+  -s s3://dp-lab-data/collaborators/pi/prj/blood2_CX3CR1_CCR2 \
   -d blood2_CX3CR1_CCR2
 ```
 
@@ -50,4 +50,60 @@ $ python check_validity.py \
     --genomic=/fscratch/chunj/seqc-sort/genomic \
     --kit=v3 \
     --threads=20
+```
+
+```
+2021-08-25 22:02:31,445	INFO services.py:1265 -- View the Ray dashboard at http://127.0.0.1:8265
+|   | read_type | lane_num | fastq                                                                               |
+|---|-----------|----------|-------------------------------------------------------------------------------------|
+| 0 | R1        |      001 | workspace/.../barcode/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R1_001.fastq.gz |
+| 1 | R1        |      002 | workspace/.../barcode/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L002_R1_001.fastq.gz |
+| 2 | R1        |      003 | workspace/.../barcode/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L003_R1_001.fastq.gz |
+| 3 | R1        |      004 | workspace/.../barcode/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L004_R1_001.fastq.gz |
+
+|   | read_type | lane_num | fastq                                                                               |
+|---|-----------|----------|-------------------------------------------------------------------------------------|
+| 0 | R2        |      001 | workspace/.../genomic/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R2_001.fastq.gz |
+| 1 | R2        |      002 | workspace/.../genomic/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L002_R2_001.fastq.gz |
+| 2 | R2        |      003 | workspace/.../genomic/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L003_R2_001.fastq.gz |
+| 3 | R2        |      004 | workspace/.../genomic/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L004_R2_001.fastq.gz |
+
+Lane: 001
+R1: workspace/.../barcode/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R1_001.fastq.gz
+R2: workspace/.../genomic/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R2_001.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-001.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-002.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-003.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-004.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-005.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-006.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-007.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-008.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-009.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-010.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-011.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-012.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-013.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-014.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-015.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-016.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-017.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-018.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-019.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-020.fastq.gz
+Ready: 0 Not Ready: 20
+Ready: 0 Not Ready: 20
+Ready: 1 Not Ready: 19
+Found in `workspace/.../seqc-results/chunk-001.fastq.gz`
+> Expected
+@:GATGATCAGTAGCCAG:ATTCACTTTATG:G;A00333:373:HF27HDSX2:1:1101:1127:1000
+GCATCAGCCTAGAGCAGGACAAGCCACGTCAGCCAGCTCTGATTTGACTGAGAAACTCTGCCTCAAAGAATAAGGCAGAGCAATCAAGGAT
+
+> Actual
+@:ACCAAACCACATGGTT:CATCTATAAGGT:G;A00333:373:HF27HDSX2:1:1101:1127:1000
+GCATCAGCCTAGAGCAGGACAAGCCACGTCAGCCAGCTCTGATTTGACTGAGAAACTCTGCCTCAAAGAATAAGGCAGAGCAATCAAGGAT
+
+real	0m44.898s
+user	0m6.603s
+sys	0m8.614s
 ```

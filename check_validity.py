@@ -217,20 +217,49 @@ def parse_arguments():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--sample", action="store", dest="sample_name", required=True)
-
-    parser.add_argument("--barcode", action="store", dest="dir_barcode", required=True)
-
-    parser.add_argument("--genomic", action="store", dest="dir_genomic", required=True)
-
-    parser.add_argument("--kit", action="store", dest="ten_x_kit", required=True)
-
     parser.add_argument(
-        "--chunk-prefix", action="store", dest="chunk_prefix", default="chunk"
+        "--sample",
+        action="store",
+        dest="sample_name",
+        help="[SAMPLE NAME]_S1_L00[LANE NUMBER]_[READ TYPE]_001.fastq.gz",
+        required=True,
     )
 
     parser.add_argument(
-        "--threads", action="store", type=int, dest="num_threads", default=20
+        "--barcode",
+        action="store",
+        dest="dir_barcode",
+        help="Directory containing barcode FASTQ files",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--genomic",
+        action="store",
+        dest="dir_genomic",
+        help="Directory containing genomic FASTQ files",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--kit", action="store", dest="ten_x_kit", help="either v2 or v3", required=True
+    )
+
+    parser.add_argument(
+        "--chunk-prefix",
+        action="store",
+        dest="chunk_prefix",
+        default="chunk",
+        help="Prefix used when splitting your merged FASTQ file into multiple chunks. Include the directory name.",
+    )
+
+    parser.add_argument(
+        "--threads",
+        action="store",
+        type=int,
+        dest="num_threads",
+        default=20,
+        help="Number of parallel tasks to be used to speed up the search",
     )
 
     # parse arguments

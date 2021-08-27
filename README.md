@@ -27,7 +27,7 @@ $ ./download.sh \
 ```
 
 ```
-.
+workspace
 ├── blood2_CX3CR1_CCR2-HPC
 │   ├── blood2_CX3CR1_CCR2_merged.fastq.gz
 │   ├── barcode
@@ -60,7 +60,7 @@ $ ./split.sh
 ```
 
 ```
-.
+workspace
 ├── blood2_CX3CR1_CCR2-HPC
 │   ├── blood2_CX3CR1_CCR2_merged.fastq.gz
 │   ├── chunk-001.fastq.gz
@@ -99,15 +99,17 @@ Run the checking process:
 
 ```bash
 $ python check_validity.py \
-    --sample=2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13 \
-    --barcode=/fscratch/chunj/seqc-sort/barcode \
-    --genomic=/fscratch/chunj/seqc-sort/genomic \
-    --kit=v3 \
+    --sample 2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13 \
+    --barcode workspace/blood2_CX3CR1_CCR2/barcode \
+    --genomic workspace/blood2_CX3CR1_CCR2/genomic \
+    --chunk-prefix workspace/blood2_CX3CR1_CCR2/chunk \
+    --kit v3 \
     --threads=20
 ```
 
+NOTE: `--sample` should be set to the `SAMPLE NAME` prefix of the FASTQ file name: `[SAMPLE NAME]_S1_L00[LANE NUMBER]_[READ TYPE]_001.fastq.gz`
+
 ```
-2021-08-25 22:02:31,445	INFO services.py:1265 -- View the Ray dashboard at http://127.0.0.1:8265
 |   | read_type | lane_num | fastq                                                                               |
 |---|-----------|----------|-------------------------------------------------------------------------------------|
 | 0 | R1        |      001 | workspace/.../barcode/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R1_001.fastq.gz |
@@ -125,30 +127,30 @@ $ python check_validity.py \
 Lane: 001
 R1: workspace/.../barcode/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R1_001.fastq.gz
 R2: workspace/.../genomic/2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R2_001.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-001.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-002.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-003.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-004.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-005.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-006.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-007.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-008.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-009.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-010.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-011.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-012.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-013.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-014.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-015.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-016.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-017.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-018.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-019.fastq.gz
-Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../seqc-results/chunk-020.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-001.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-002.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-003.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-004.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-005.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-006.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-007.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-008.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-009.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-010.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-011.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-012.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-013.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-014.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-015.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-016.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-017.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-018.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-019.fastq.gz
+Searching for `A00333:373:HF27HDSX2:1:1101:1127:1000` in workspace/.../chunk-020.fastq.gz
 Ready: 0 Not Ready: 20
 Ready: 0 Not Ready: 20
 Ready: 1 Not Ready: 19
-Found in `workspace/.../seqc-results/chunk-001.fastq.gz`
+Found in `workspace/.../chunk-001.fastq.gz`
 > Expected
 @:GATGATCAGTAGCCAG:ATTCACTTTATG:G;A00333:373:HF27HDSX2:1:1101:1127:1000
 GCATCAGCCTAGAGCAGGACAAGCCACGTCAGCCAGCTCTGATTTGACTGAGAAACTCTGCCTCAAAGAATAAGGCAGAGCAATCAAGGAT

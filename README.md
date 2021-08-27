@@ -107,7 +107,12 @@ $ python check_validity.py \
     --threads=20
 ```
 
-NOTE: `--sample` should be set to the `SAMPLE NAME` prefix of the FASTQ file name: `[SAMPLE NAME]_S1_L00[LANE NUMBER]_[READ TYPE]_001.fastq.gz`
+NOTE:
+
+- `--sample` should be set to the `SAMPLE NAME` prefix of the FASTQ file name: `[SAMPLE NAME]_S1_L00[LANE NUMBER]_[READ TYPE]_001.fastq.gz`
+- For example, if your FASTQ file name is `2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13_L001_R1_001.fastq.gz`, then `--sample` should be set to `2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13`.
+
+Below is the example output of the search. If your merged FASTQ file is invalid, you will see "expected" vs. "actual", and the exit code will be 1. If your merged FASTQ file looks okay, you will see "looks okay", and the exit code will be 0.
 
 ```
 |   | read_type | lane_num | fastq                                                                               |
@@ -158,8 +163,9 @@ GCATCAGCCTAGAGCAGGACAAGCCACGTCAGCCAGCTCTGATTTGACTGAGAAACTCTGCCTCAAAGAATAAGGCAGAG
 > Actual
 @:ACCAAACCACATGGTT:CATCTATAAGGT:G;A00333:373:HF27HDSX2:1:1101:1127:1000
 GCATCAGCCTAGAGCAGGACAAGCCACGTCAGCCAGCTCTGATTTGACTGAGAAACTCTGCCTCAAAGAATAAGGCAGAGCAATCAAGGAT
+```
 
-real	0m44.898s
-user	0m6.603s
-sys	0m8.614s
+```bash
+echo $?
+1
 ```

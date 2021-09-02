@@ -18,6 +18,7 @@ def parse_fastq_name(sample_name: str, read_type: str, fastqs: list) -> list:
         pattern = f"{sample_name}_L(\d+?)_{read_type}_.*\.fastq\.gz"
         match = re.search(pattern, fn)
         if not match:
+            continue
             raise Exception("Invalid FASTQ filename!")
 
         lane_name = match.group(1)
@@ -27,13 +28,37 @@ def parse_fastq_name(sample_name: str, read_type: str, fastqs: list) -> list:
     return results
 
 
-def parse_r1(sequence: str, ten_x_kit: str):
-    if ten_x_kit == "v3":
+def parse_r1(sequence: str, platform: str):
+    if platform == "10x_v3":
         umi_len = 12
-    elif ten_x_kit == "v2":
+    elif platform == "10x_v2":
         umi_len = 10
+    elif platform == "indrop":
+        identifier = sequence[24:28]
+        if identifier == "CGCC":
+            cb1 = sequence[:8]
+            cb2 = sequence[30:38]
+            rmt = sequence[38:46]
+            poly_t = sequence[46:]
+        elif identifier == "ACGC":
+            cb1 = sequence[:9]
+            cb2 = sequence[31:39]
+            rmt = sequence[39:47]
+            poly_t = sequence[47:]
+        elif identifier == "GACG":
+            cb1 = sequence[:10]
+            cb2 = sequence[32:40]
+            rmt = sequence[40:48]
+            poly_t = sequence[48:]
+        elif identifier == "TGAC":
+            cb1 = sequence[:11]
+            cb2 = sequence[33:41]
+            rmt = sequence[41:49]
+            poly_t = sequence[49:]
+        cb = cb1 + cb2
+        return cb, rmt, poly_t
     else:
-        raise Exception("ten_x_kit must be either v2 or v3.")
+        raise Exception("platform must be either 10x_v2, 10x_v3, or indrop.")
     cb, umi = sequence[:16], sequence[16 : 16 + umi_len]
     poly_t = sequence[16 + umi_len :]
     return cb, umi, poly_t
@@ -79,8 +104,6 @@ def check(
     read_id_expected = get_merged_read_id(cb, umi, poly_t, read_id)
     sequence_expected = sequence
 
-    # print(f"Searching for `{query}` in {merged_fastq}...")
-
     read_id_actual = None
     sequence_actual = None
     count = 0
@@ -116,7 +139,7 @@ def main(
     dir_barcodes: str,
     dir_genomic: str,
     merged_fastqs: list,
-    ten_x_kit: str,
+    platform: str,
 ):
 
     barcode_fastqs = glob.glob(os.path.join(dir_barcodes, "*.fastq.gz"))
@@ -135,6 +158,12 @@ def main(
         sample_name=sample_name, read_type="R2", fastqs=genomic_fastqs
     )
 
+    if len(r1_fastqs) == 0:
+        raise Exception(f"No matching R1 found in {dir_barcodes}")
+
+    if len(r2_fastqs) == 0:
+        raise Exception(f"No matching R2 found in {dir_genomic}")
+
     column_names = ["read_type", "lane_num", "fastq"]
     df_r1 = pd.DataFrame(r1_fastqs, columns=column_names)
     df_r2 = pd.DataFrame(r2_fastqs, columns=column_names)
@@ -144,6 +173,18 @@ def main(
     print(df_r2.to_markdown(tablefmt="github"))
 
     # check equal lane number
+    df_merged = pd.merge(
+        df_r1,
+        df_r2,
+        left_on=["lane_num"],
+        right_on=["lane_num"],
+        how="outer",
+        indicator=True,
+    )
+    if len(df_merged[df_merged._merge != "both"]) > 0:
+        print("Lane mistmach found!")
+        exit(1)
+
     lane_numbers = df_r1.lane_num.unique()
 
     for lane_num in lane_numbers:
@@ -158,7 +199,7 @@ def main(
         print("R2:", r2_fastq)
 
         read_id_r1, sequence_r1 = read_fastq_line1(r1_fastq)
-        cb, umi, poly_t = parse_r1(sequence=sequence_r1, ten_x_kit=ten_x_kit)
+        cb, umi, poly_t = parse_r1(sequence=sequence_r1, platform=platform)
 
         read_id_r2, sequence_r2 = read_fastq_line1(r2_fastq)
 
@@ -208,9 +249,12 @@ def main(
                     ray.shutdown()
                     exit(1)
 
-            # exit if all ready
+            # exit if all ready but not found
             if len(not_ready) == 0:
-                keep_check = False
+                print("Not found!")
+
+                ray.shutdown()
+                exit(1)
 
 
 def parse_arguments():
@@ -242,7 +286,11 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        "--kit", action="store", dest="ten_x_kit", help="either v2 or v3", required=True
+        "--platform",
+        action="store",
+        dest="platform",
+        help="either 10x_v2, 10x_v3, or indrop",
+        required=True,
     )
 
     parser.add_argument(
@@ -274,16 +322,6 @@ if __name__ == "__main__":
 
     ray.init(num_cpus=params.num_threads)
 
-    # sample_name = "2653_blood2_CX3CR1_CCR2_IGO_12104_39_S13"
-    # ten_x_kit = "v3"
-    # dir_barcodes = "/fscratch/chunj/seqc-sort/barcode"
-    # dir_genomic = "/fscratch/chunj/seqc-sort/genomic"
-
-    # sample_name = "1890_RA19_10_13_DAPI_Low_IGO_10875_23"
-    # ten_x_kit = "v3"
-    # dir_barcodes = "/fast/chunj/nucseq/fastq/barcode"
-    # dir_genomic = "/fast/chunj/nucseq/fastq/genomic"
-
     merged_fastqs = glob.glob(f"{params.chunk_prefix}-*.fastq.gz")
 
     if len(merged_fastqs) == 0:
@@ -294,5 +332,5 @@ if __name__ == "__main__":
         dir_barcodes=params.dir_barcode,
         dir_genomic=params.dir_genomic,
         merged_fastqs=merged_fastqs,
-        ten_x_kit=params.ten_x_kit,
+        platform=params.platform,
     )

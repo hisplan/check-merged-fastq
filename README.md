@@ -103,7 +103,7 @@ $ python check_validity.py \
     --barcode workspace/blood2_CX3CR1_CCR2/barcode \
     --genomic workspace/blood2_CX3CR1_CCR2/genomic \
     --chunk-prefix workspace/blood2_CX3CR1_CCR2/chunk \
-    --kit v3 \
+    --platform 10x_v3 \
     --threads=20
 ```
 
